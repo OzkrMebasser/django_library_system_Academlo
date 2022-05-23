@@ -1,0 +1,28 @@
+{% extends "library/base.html" %} {% block content %}
+<table class="table"  style="margin: auto;">
+  <thead>
+    <tr>
+      <th scope="col">SN</th>
+      <th scope="col">Member Name</th>
+      <th scope="col">Email</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  {% if members %}
+  <tbody>
+    {% for member in members %}
+    <tr>
+      <th scope="row">{{ forloop.counter }}</th>
+      <td>{{member.name}}</td>
+      <td>{{member.email}}</td>
+      <td><a href="{% url 'library:member-update' member.id%}">Update</a>  <a href="{% url 'library:member-delete' member.id%}">Delete</a>  <a href="{% url 'library:member-detail' member.id%}">Profile</a> </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+  {% else %}
+  <tbody><tr><td colspan="6"> No Members.</td></tr></tbody>
+  {% endif %}
+</table>
+{% endblock %}
+
+
