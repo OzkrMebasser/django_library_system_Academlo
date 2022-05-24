@@ -7,7 +7,14 @@
     <a href="{% url 'library:member-list' %}">&#8592;Back</a>
     <form method="POST" enctype="multipart/form-data" action="">
         {%csrf_token%}
-        
+        <!-- <label > -->
+        <!-- {{form.user_type.label.all|join:', '}} -->
+        <!-- <select name="select"> -->
+        <!-- <option value="value1">Member</option> -->
+        <!-- <option value="value2" selected>IT staff</option> -->
+        <!-- <option value="value3">Librerian</option> -->
+          <!-- </select> -->
+        <!-- </label>  -->
         <label >{{form.email.label}} <span>(Add a valid email)</span></label>
         {{form.email}} 
         
@@ -28,6 +35,11 @@
 
         <label >{{form.pic.label}}</label> 
         {{form.pic}}
+
+
+
+
+        
 
         <label> <input class="button" type="submit" value="Submit"></label>
         

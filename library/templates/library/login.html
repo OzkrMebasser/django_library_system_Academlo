@@ -1,3 +1,8 @@
+
+
+
+
+
 {% extends 'library/base.html' %}
 {% block content %}
 
@@ -8,7 +13,7 @@
         {%csrf_token%}
         
             {{form.as_p}}
-            <input class="button" type="submit" value="Login">
+            <input class="button danger" type="submit" value="Login">
         
         
         </form>

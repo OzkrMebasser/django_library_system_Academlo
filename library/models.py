@@ -65,9 +65,15 @@ class Account(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
+    USER_TYPE_CHOICES = (
+     (1 , 'member'),
+     (2 , 'IT staff'),
+     (3 , 'Librerian'),
+         )
+    user_type = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES, default=True, name='user_type')
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['name', 'username']
+    REQUIRED_FIELDS = ['name', 'username', 'user_type']
 
     objects = MyAccountManager()
 
