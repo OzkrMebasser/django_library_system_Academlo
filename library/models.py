@@ -73,7 +73,7 @@ class Account(AbstractBaseUser, PermissionsMixin):
     user_type = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES, default=True, name='user_type')
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['name', 'username', 'user_type']
+    REQUIRED_FIELDS = ['name', 'username']
 
     objects = MyAccountManager()
 
