@@ -27,6 +27,9 @@ urlpatterns = [
     path('member/<slug:pk>/update/', MemberUpdate.as_view(), name='member-update'),
     path('member/<slug:pk>/delete/', MemberDelete.as_view(), name='member-delete'),
 
+    path('users/', UsersView.as_view(), name='users-list'),
+    path('users/create/', UsersCreate.as_view(), name='users-create'),
+    path('user/<slug:pk>/', UsersDetail.as_view(), name='users-detail'),
 
 
     path('borrowers/', BorrowerView.as_view(), name='borrower-list'),

@@ -100,7 +100,8 @@
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                   <li><a class="dropdown-item" href="{% url 'library:member-detail' request.user.id%}">View Account</a></li>
                   <li><a class="dropdown-item" href="{%url 'library:logout'%}">Logout</a></li>
-                 
+                  <li><a class="dropdown-item" href="{%url 'library:users-list'%}">All Users</a></li>
+                  <li><a class="dropdown-item" href="{% url 'library:users-create'%}">Add User</a></li>
                 </ul>
               </li>
               {% endif %}

@@ -15,16 +15,18 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
 
 class MyAccountManager(BaseUserManager):
-    def create_user(self, email, name, username, password=None):
+    def create_user(self, email, name, username, user_type, password=None):
         if not email:
             raise ValueError('Users must have an email address')
         if not username:
             raise ValueError('Users must have a username')
+        
 
         user = self.model(
             email=self.normalize_email(email),
             username=username,
             name=name,
+            user_type=user_type
 
 
 
@@ -34,12 +36,13 @@ class MyAccountManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, name, username, password):
+    def create_superuser(self, email, name, username, user_type,password):
         user = self.create_user(
             email=self.normalize_email(email),
             password=password,
             username=username,
             name=name,
+            user_type=user_type
 
         )
         user.is_admin = True
@@ -73,7 +76,7 @@ class Account(AbstractBaseUser, PermissionsMixin):
     user_type = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES, default=True, name='user_type')
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['name', 'username']
+    REQUIRED_FIELDS = ['name', 'username', 'user_type']
 
     objects = MyAccountManager()
 

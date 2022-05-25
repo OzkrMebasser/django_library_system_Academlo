@@ -60,6 +60,7 @@ class HomeView(LoginRequiredMixin, TemplateView):
         context['search_input']=search_input
         return context
 
+# Book views classes
 
 class BookView(LoginRequiredMixin, ListView):
     model=Book
@@ -117,7 +118,7 @@ class BookDelete(LoginRequiredMixin,UserAccessMixin,  DeleteView):
     success_url=reverse_lazy('library:book-list')
 
 
-
+# Member views classes
 class MemberView(LoginRequiredMixin, UserAccessMixin, ListView):
     model=Account
     context_object_name='members'
@@ -134,6 +135,7 @@ class MemberView(LoginRequiredMixin, UserAccessMixin, ListView):
         context['search_input']=search_input
 
         return context
+
 
 class MemberDetail(LoginRequiredMixin, DetailView):
     model=Account
@@ -173,7 +175,41 @@ class MemberDelete(LoginRequiredMixin,UserAccessMixin,  DeleteView):
     fields='__all__'
     success_url=reverse_lazy('library:member-list')
 
+# Users views classes
+class UsersView(LoginRequiredMixin, UserAccessMixin, ListView):
+    model=Account
+    context_object_name='users'
+    permission_required = 'users.view_users'
+    template_name='library/users_list.html'
 
+    def get_context_data(self,  *args,**kwargs):
+        context=super().get_context_data(**kwargs)
+        context['users']=context['users'].exclude(is_admin=False,is_staff=False,is_superuser=False, user_type=False)
+        # .exclude(is_admin=True)
+        search_input=self.request.GET.get('search-area') or ''
+        if search_input:
+            context['users']=context['users'].filter(name__startswith=search_input)
+
+        context['search_input']=search_input
+
+        return context
+
+class UsersCreate(UserAccessMixin, CreateView):
+    template_name = 'library/register.html'
+    form_class = RegistrationForm
+    permission_required = 'users.add_users'
+    success_url = reverse_lazy('library:users-list')
+
+    def form_valid(self, form):
+        form.instance.user=self.request.user
+        return super(UsersCreate, self).form_valid(form)
+
+class UsersDetail(LoginRequiredMixin, DetailView):
+    model=Account
+    context_object_name='user'
+    template_name='library/user.html'
+
+# Borrower views classes
 class BorrowerView(LoginRequiredMixin, ListView):
     model=Borrower
     context_object_name='borrowers'
